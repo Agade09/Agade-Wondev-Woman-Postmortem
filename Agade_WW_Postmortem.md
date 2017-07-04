@@ -26,7 +26,7 @@ set<array<vec,2>> Possible_Locations(state Previous_state,state S_observed,set<a
         S.PlaceEnemies(Loc);
         S.Simulate(my_last_move);//The enemy pawns need to be placed before this because they might block your build/fail your push
         vector<action> Moves=S.LegalMoves();
-        if(Move.size()>0){
+        if(Moves.size()>0){
             for(action mv:Moves){
                 S.Simulate(mv);
                 if(Coherent(S,S_observed)){
@@ -193,7 +193,7 @@ I was actually spending quite alot of time sorting all these move vectors but I 
 
 ### Negascout
 
-Once you have a pretty good move ordering, to further prune the search tree you can implement a variations of the classical minimax/negamax algorithm such as [Negascout](https://chessprogramming.wikispaces.com/NegaScout). In the very rough way that I understand it, the idea of those algorithms is that your move ordering is so good that you're most of the time going to be trying the best move first, so you just assume you're correct and from time to time you have to re-search a part of the tree because you were wrong. These algorithms are correct, they will always return the same result as a minimax, and they will always search less unique nodes than a standard minimax as long as that assumption of testing the best move first is true from time to time. However if your move ordering isn't good enough and/or you're not caching enough things the performance overhead of the re-searches can outway the pruning gains. If you try Negascout, make sure to test that your AI actually got stronger.
+Once you have a pretty good move ordering, to further prune the search tree you can implement a variations of the classical minimax/negamax algorithm such as [Negascout](https://chessprogramming.wikispaces.com/NegaScout). In the very rough way that I understand it, the idea of those algorithms is that your move ordering is so good that you're most of the time going to be trying the best move first, so you just assume you're correct and from time to time you have to re-search a part of the tree because you were wrong. These algorithms are correct, they will always return the same result as a minimax, and they will always search less unique nodes than a standard minimax as long as that assumption of testing the best move first is true from time to time. However if your move ordering isn't good enough and/or you're not caching enough things the performance overhead of the re-searches can outweigh the pruning gains. If you try Negascout, make sure to test that your AI actually got stronger.
 
 In pseudocode instead of exploring your nodes as
 
